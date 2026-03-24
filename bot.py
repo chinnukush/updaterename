@@ -7,7 +7,7 @@ from pyrogram import Client, __version__
 from pyrogram.raw.all import layer
 from config import Config
 from aiohttp import web
-from pyromod import listen
+from pyromod import listen   # ✅ REQUIRED
 
 routes = web.RouteTableDef()
 
@@ -21,6 +21,7 @@ async def web_server():
     return web_app
 
 pyrogram.utils.MIN_CHANNEL_ID = -100999999999999
+
 
 class Bot(Client):
 
@@ -37,19 +38,30 @@ class Bot(Client):
 
     async def start(self):
         await super().start()
+
+        # ✅ SAFETY: initialize listeners (prevents KeyError)
+        if not hasattr(self, "listeners"):
+            self.listeners = {}
+
         me = await self.get_me()
         self.mention = me.mention
         self.username = me.username  
         self.uptime = Config.BOT_UPTIME     
+
         if Config.WEBHOOK:
             app = web.AppRunner(await web_server())
             await app.setup()
-            PORT = int(os.environ.get("PORT", 8000))  # Use port 8000 or env PORT
+            PORT = int(os.environ.get("PORT", 8000))
             await web.TCPSite(app, "0.0.0.0", PORT).start()
+
         print(f"{me.first_name} Is Started.....✨️")
+
         if Config.ADMIN:
             try: 
-                await self.send_message(Config.ADMIN, f"**{me.first_name} Is Started...**")                                
+                await self.send_message(
+                    Config.ADMIN,
+                    f"**{me.first_name} Is Started...**"
+                )                                
             except Exception as e:
                 print(f"Error sending message to admin: {e}")
         
@@ -58,7 +70,15 @@ class Bot(Client):
                 curr = datetime.now(timezone("Asia/Kolkata"))
                 date = curr.strftime('%d %B, %Y')
                 time = curr.strftime('%I:%M:%S %p')
-                await self.send_message(Config.LOG_CHANNEL, f"**{me.mention} Is Restarted !!**\n\n📅 Date : `{date}`\n⏰ Time : `{time}`\n🌐 Timezone : `Asia/Kolkata`\n\n🉐 Version : `v{__version__} (Layer {layer})`</b>")                                
+
+                await self.send_message(
+                    Config.LOG_CHANNEL,
+                    f"**{me.mention} Is Restarted !!**\n\n"
+                    f"📅 Date : `{date}`\n"
+                    f"⏰ Time : `{time}`\n"
+                    f"🌐 Timezone : `Asia/Kolkata`\n\n"
+                    f"🉐 Version : `v{__version__} (Layer {layer})`"
+                )                                
             except Exception as e:
                 print(f"Error sending message to LOG_CHANNEL: {e}")
 
@@ -66,4 +86,10 @@ class Bot(Client):
         await super().stop()
         print(f"{self.mention} is stopped.")
 
-Bot().run()
+
+# ✅ MOST IMPORTANT FIX (Pyromod binding)
+listen.Client = Client
+
+
+if __name__ == "__main__":
+    Bot().run()
