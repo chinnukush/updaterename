@@ -3,19 +3,19 @@ from typing import List
 id_pattern = re.compile(r'^.\d+$')
 
 class Config(object):
-    API_ID = os.environ.get("API_ID", "")
-    API_HASH = os.environ.get("API_HASH", "")
+    API_ID = os.environ.get("API_ID", "22971260")
+    API_HASH = os.environ.get("API_HASH", "39b93b45f525642b9c732f43185e4ab0")
     BOT_TOKEN = os.environ.get("BOT_TOKEN", "")
     DATABASE_NAME = os.environ.get("DATABASE_NAME","techifybots")     
-    DATABASE_URL = os.environ.get("DATABASE_URL","")
-    PICS = (os.environ.get("PICS", "https://i.ibb.co/MDssddJp/pic.jpg https://i.ibb.co/n8fQ2xcx/pic.jpg")).split()
-    ADMIN = int(os.environ.get("ADMIN", ""))
-    IS_FSUB = os.environ.get("IS_FSUB", "False").lower() == "true"  # Set "True" For Enable Force Subscribe
+    DATABASE_URL = os.environ.get("DATABASE_URL","mongodb+srv://Web:Web@cluster0.blbma.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+    PICS = (os.environ.get("PICS", "https://envs.sh/HwT.jpg")).split()
+    ADMIN = int(os.environ.get("ADMIN", "5911514776 7253187871 8075224687"))
+    IS_FSUB = os.environ.get("IS_FSUB", "True").lower() == "true"  # Set "True" For Enable Force Subscribe
     AUTH_CHANNELS = list(map(int, os.environ.get("AUTH_CHANNELS", "").split())) # Add Multiple channel ids
     AUTH_REQ_CHANNELS = list(map(int, os.environ.get("AUTH_REQ_CHANNELS", "").split())) # Add Multiple channel ids
-    FSUB_EXPIRE = int(os.environ.get("FSUB_EXPIRE", 2))  # minutes, 0 = no expiry
-    LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", ""))
-    BIN_CHANNEL = int(os.environ.get("BIN_CHANNEL", ""))     
+    FSUB_EXPIRE = int(os.environ.get("FSUB_EXPIRE", 0))  # minutes, 0 = no expiry
+    LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", "-1001992049478"))
+    BIN_CHANNEL = int(os.environ.get("BIN_CHANNEL", -1001992049478""))     
     WEBHOOK = bool(os.environ.get("WEBHOOK", True))
     BOT_UPTIME = time.time()
 
