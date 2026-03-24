@@ -57,8 +57,9 @@ async def refunc(client,message):
             button.append([InlineKeyboardButton("🎥 Video",callback_data="upload_video")])
         await message.reply(text=f"**Select The Output File Type**\n\n**File Name :-** `{new_name}`",reply_to_message_id=file.id,reply_markup=InlineKeyboardMarkup(button))
 
-@Client.on_callback_query(filters.regex("upload"))
+@Client.on_callback_query(filters.regex("^upload_"))
 async def doc(bot,update):
+    await update.answer()
     if not os.path.isdir("Metadata"):
         os.mkdir("Metadata")
     prefix=await tb.get_prefix(update.message.chat.id)
