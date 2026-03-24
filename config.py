@@ -14,8 +14,8 @@ class Config(object):
     AUTH_CHANNELS = list(map(int, os.environ.get("AUTH_CHANNELS", "-1002440757122 -1001999917591").split())) # Add Multiple channel ids
     AUTH_REQ_CHANNELS = list(map(int, os.environ.get("AUTH_REQ_CHANNELS", "-1002440757122 -1001999917591").split())) # Add Multiple channel ids
     FSUB_EXPIRE = int(os.environ.get("FSUB_EXPIRE", 0))  # minutes, 0 = no expiry
-    LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", "-1001992049478"))
-    BIN_CHANNEL = int(os.environ.get("BIN_CHANNEL", "-1001992049478"))     
+    LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", "-1002680514859"))
+    BIN_CHANNEL = int(os.environ.get("BIN_CHANNEL", "-1002680514859"))     
     WEBHOOK = bool(os.environ.get("WEBHOOK", True))
     BOT_UPTIME = time.time()
 
