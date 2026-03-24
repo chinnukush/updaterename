@@ -1,7 +1,7 @@
 from pyrogram import Client,filters
 from pyrogram.types import Message,CallbackQuery,InlineKeyboardButton,InlineKeyboardMarkup
 from .database import tb
-from pyromod.exceptions import ListenerTimeout
+from asyncio import TimeoutError as ListenerTimeout
 from config import Txt
 
 ON=[[InlineKeyboardButton('Metadata On ✅',callback_data='metadata_1')],[InlineKeyboardButton('Set Custom Metadata',callback_data='custom_metadata')]]
